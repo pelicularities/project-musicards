@@ -57,11 +57,27 @@ function PlayDeck({ deck }) {
   });
 
   const nextCard = () => {
-    setCurrentIndex((currentIndex + 1) % deck.length);
+    let nextIndex = (currentIndex + 1) % deck.length;
+    while (playthrough[nextIndex].correct) {
+      if (allCorrect()) break;
+      // if next card by index is already marked correct, skip it
+      nextIndex = (nextIndex + 1) % deck.length;
+    }
+    setCurrentIndex(nextIndex);
   };
 
   const previousCard = () => {
-    setCurrentIndex((currentIndex + deck.length - 1) % deck.length);
+    let previousIndex = (currentIndex + deck.length - 1) % deck.length;
+    while (playthrough[previousIndex].correct) {
+      if (allCorrect()) break;
+      // if previous card by index is already marked correct, skip it
+      previousIndex = (previousIndex + deck.length - 1) % deck.length;
+    }
+    setCurrentIndex(previousIndex);
+  };
+
+  const allCorrect = () => {
+    return countCorrect() === deck.length ? true : false;
   };
 
   const countCorrect = () => {
@@ -84,6 +100,7 @@ function PlayDeck({ deck }) {
       <div>
         Score: {countCorrect()}/{deck.length}
       </div>
+      {allCorrect() && <div>You've completed this deck!</div>}
       <div className={classes.playDeck}>
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
