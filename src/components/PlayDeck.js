@@ -38,24 +38,41 @@ const useStyles = makeStyles({
   grayLight: {
     color: "#C4c4c4",
   },
+  clickable: {
+    cursor: "pointer",
+  },
 });
 
 function PlayDeck({ deck }) {
   const classes = useStyles();
-  const [currentCard, setCurrentCard] = useState(deck[0]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextCard = () => {
+    setCurrentIndex((currentIndex + 1) % deck.length);
+  };
+
+  const previousCard = () => {
+    setCurrentIndex((currentIndex + deck.length - 1) % deck.length);
+  };
+
   return (
     <div className={classes.playContainer}>
       <div className={classes.playDeck}>
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
           size="3x"
-          className={classes.grayLight}
+          className={`${classes.grayLight} ${classes.clickable}`}
+          onClick={previousCard}
         />
-        <Flashcard flashcard={currentCard} className={classes.playFlashcard} />
+        <Flashcard
+          flashcard={deck[currentIndex]}
+          className={classes.playFlashcard}
+        />
         <FontAwesomeIcon
           icon={faChevronCircleRight}
           size="3x"
-          className={classes.grayLight}
+          className={`${classes.grayLight} ${classes.clickable}`}
+          onClick={nextCard}
         />
       </div>
       <div className={classes.playControls}>
