@@ -13,25 +13,21 @@ import {
 
 const useStyles = makeStyles({
   playContainer: {
-    minWidth: "20rem",
-    maxWidth: "26rem",
-    margin: "0 auto",
+    display: "inline-block",
   },
   playDeck: {
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    margin: "0 auto",
+    width: "100%",
+    maxWidth: "30rem",
   },
   playFlashcard: {
-    minWidth: "14rem",
-    maxWidth: "20rem",
-    height: "18rem",
+    margin: "1rem",
   },
   playControls: {
-    marginTop: "2rem",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
   },
   red: {
     color: "#FF0000",
