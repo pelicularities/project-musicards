@@ -24,6 +24,7 @@ const useStyles = makeStyles({
   },
   playFlashcard: {
     margin: "1rem",
+    width: "20rem",
   },
   playControls: {
     display: "flex",
@@ -46,6 +47,14 @@ const useStyles = makeStyles({
 function PlayDeck({ deck }) {
   const classes = useStyles();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [playthrough, setPlaythrough] = useState([...deck]);
+
+  playthrough.map((flashcard) => {
+    return {
+      ...flashcard,
+      correct: false,
+    };
+  });
 
   const nextCard = () => {
     setCurrentIndex((currentIndex + 1) % deck.length);
@@ -55,8 +64,26 @@ function PlayDeck({ deck }) {
     setCurrentIndex((currentIndex + deck.length - 1) % deck.length);
   };
 
+  const countCorrect = () => {
+    return playthrough.reduce((score, flashcard) => {
+      if (flashcard.correct) score++;
+      return score;
+    }, 0);
+  };
+  const countCardsLeft = () => deck.length - countCorrect();
+
+  const markCorrect = () => {
+    const newPlaythroughArray = [...playthrough];
+    newPlaythroughArray[currentIndex].correct = true;
+    nextCard();
+  };
+
   return (
     <div className={classes.playContainer}>
+      <div>Cards left: {countCardsLeft()}</div>
+      <div>
+        Score: {countCorrect()}/{deck.length}
+      </div>
       <div className={classes.playDeck}>
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
@@ -84,7 +111,8 @@ function PlayDeck({ deck }) {
         <FontAwesomeIcon
           icon={faCheckCircle}
           size="3x"
-          className={classes.green}
+          className={`${classes.green} ${classes.clickable}`}
+          onClick={markCorrect}
         />
       </div>
     </div>

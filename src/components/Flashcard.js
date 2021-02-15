@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -23,6 +23,10 @@ function Flashcard({ flashcard, className }) {
   const classes = useStyles();
   const { front, back } = flashcard;
   const [isFront, setIsFront] = useState(true);
+
+  useLayoutEffect(() => {
+    setIsFront(true);
+  }, [flashcard]);
 
   const flipCard = () => {
     setIsFront(!isFront);
