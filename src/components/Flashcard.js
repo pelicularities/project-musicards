@@ -6,7 +6,7 @@ import Card from "@material-ui/core/Card";
 const useStyles = makeStyles({
   flashcard: {
     borderRadius: "0.25rem",
-    height: "10rem",
+    minHeight: "10rem",
     padding: "1rem",
     fontSize: "2rem",
     display: "flex",
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Flashcard({ flashcard }) {
+function Flashcard({ flashcard, className }) {
   const classes = useStyles();
   const { front, back } = flashcard;
   const [isFront, setIsFront] = useState(true);
@@ -30,7 +30,9 @@ function Flashcard({ flashcard }) {
 
   return (
     <Card
-      className={clsx(classes.flashcard, { [classes.backOfCard]: !isFront })}
+      className={clsx(className, classes.flashcard, {
+        [classes.backOfCard]: !isFront,
+      })}
       variant="outlined"
       onClick={flipCard}
     >
