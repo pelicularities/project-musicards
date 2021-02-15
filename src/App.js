@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import DeckGallery from "./components/DeckGallery";
 
 function App() {
+  const defaultDeck = [
+    {
+      id: uuidv4(),
+      front: "the apple",
+      back: "der Apfel",
+      correct: false,
+    },
+    {
+      id: uuidv4(),
+      front: "the bed",
+      back: "das Bett",
+      correct: false,
+    },
+    {
+      id: uuidv4(),
+      front: "the cat",
+      back: "die Katze",
+      correct: false,
+    },
+  ];
+  const [deck, setDeck] = useState(defaultDeck);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <h1>Musicards</h1>
+        <DeckGallery deck={deck} />
+      </div>
+    </BrowserRouter>
   );
 }
 
