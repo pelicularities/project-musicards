@@ -46,29 +46,18 @@ const useStyles = makeStyles({
 
 function PlayDeck({ deck }) {
   const classes = useStyles();
-  const [playthrough, setPlaythrough] = useState([...deck]);
+  const [playthrough, setPlaythrough] = useState(
+    deck.map((flashcard) => {
+      return {
+        ...flashcard,
+        correct: false,
+      };
+    })
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [attempts, setAttempts] = useState(0);
   const [correctAttempts, setCorrectAttempts] = useState(0);
   const [deckComplete, setDeckComplete] = useState(false);
-
-  // useEffect(() => {
-  //   const newPlaythrough = [...deck];
-  //   newPlaythrough.map((flashcard) => {
-  //     return {
-  //       ...flashcard,
-  //       correct: false,
-  //     };
-  //   });
-  //   setPlaythrough(newPlaythrough);
-  // }, []);
-
-  playthrough.map((flashcard) => {
-    return {
-      ...flashcard,
-      correct: false,
-    };
-  });
 
   const checkComplete = () => {
     if (countCorrect() === deck.length) setDeckComplete(true);
@@ -117,7 +106,6 @@ function PlayDeck({ deck }) {
       setCorrectAttempts(correctAttempts + 1);
     }
     nextCard();
-    console.log(playthrough);
   };
 
   const markIncorrect = () => {
@@ -128,8 +116,7 @@ function PlayDeck({ deck }) {
   };
 
   const resetDeck = () => {
-    const newPlaythrough = [...deck];
-    newPlaythrough.map((flashcard) => {
+    const newPlaythrough = deck.map((flashcard) => {
       return {
         ...flashcard,
         correct: false,
