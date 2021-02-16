@@ -8,8 +8,8 @@ import {
   faChevronCircleLeft,
   faCheckCircle,
   faTimesCircle,
-  faStickyNote,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   playContainer: {
@@ -46,20 +46,24 @@ const useStyles = makeStyles({
 
 function PlayDeck({ deck }) {
   const classes = useStyles();
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [playthrough, setPlaythrough] = useState([...deck]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [attempts, setAttempts] = useState(0);
+  const [correctAttempts, setCorrectAttempts] = useState(0);
+  const [deckComplete, setDeckComplete] = useState(false);
 
-  playthrough.map((flashcard) => {
-    return {
-      ...flashcard,
-      correct: false,
-    };
-  });
+  useEffect(() => {
+    resetDeck();
+  }, []);
+
+  const checkComplete = () => {
+    if (countCorrect() === deck.length) setDeckComplete(true);
+  };
 
   const nextCard = () => {
     let nextIndex = (currentIndex + 1) % deck.length;
     while (playthrough[nextIndex].correct) {
-      if (allCorrect()) break;
+      if (deckComplete) break;
       // if next card by index is already marked correct, skip it
       nextIndex = (nextIndex + 1) % deck.length;
     }
@@ -69,15 +73,11 @@ function PlayDeck({ deck }) {
   const previousCard = () => {
     let previousIndex = (currentIndex + deck.length - 1) % deck.length;
     while (playthrough[previousIndex].correct) {
-      if (allCorrect()) break;
+      if (deckComplete) break;
       // if previous card by index is already marked correct, skip it
       previousIndex = (previousIndex + deck.length - 1) % deck.length;
     }
     setCurrentIndex(previousIndex);
-  };
-
-  const allCorrect = () => {
-    return countCorrect() === deck.length ? true : false;
   };
 
   const countCorrect = () => {
@@ -91,16 +91,48 @@ function PlayDeck({ deck }) {
   const markCorrect = () => {
     const newPlaythroughArray = [...playthrough];
     newPlaythroughArray[currentIndex].correct = true;
+    setPlaythrough(newPlaythroughArray);
+    setAttempts(attempts + 1);
+    setCorrectAttempts(correctAttempts + 1);
+    checkComplete();
     nextCard();
+  };
+
+  const markIncorrect = () => {
+    setAttempts(attempts + 1);
+    nextCard();
+  };
+
+  const resetDeck = () => {
+    const newPlaythrough = [...deck];
+    newPlaythrough.map((flashcard) => {
+      return {
+        ...flashcard,
+        correct: false,
+      };
+    });
+    setPlaythrough(newPlaythrough);
+    setCurrentIndex(0);
+    setAttempts(0);
+    setCorrectAttempts(0);
   };
 
   return (
     <div className={classes.playContainer}>
       <div>Cards left: {countCardsLeft()}</div>
       <div>
-        Score: {countCorrect()}/{deck.length}
+        Cards correct: {countCorrect()}/{deck.length}
       </div>
-      {allCorrect() && <div>You've completed this deck!</div>}
+      <div>
+        Attempts: {correctAttempts}/{attempts}
+      </div>
+
+      <div>
+        {deckComplete && <span>You've completed this deck!</span>}{" "}
+        <Link to="#" onClick={resetDeck}>
+          Reset Deck
+        </Link>
+      </div>
       <div className={classes.playDeck}>
         <FontAwesomeIcon
           icon={faChevronCircleLeft}
@@ -123,7 +155,8 @@ function PlayDeck({ deck }) {
         <FontAwesomeIcon
           icon={faTimesCircle}
           size="3x"
-          className={classes.red}
+          className={`${classes.red} ${classes.clickable}`}
+          onClick={markIncorrect}
         />
         <FontAwesomeIcon
           icon={faCheckCircle}
