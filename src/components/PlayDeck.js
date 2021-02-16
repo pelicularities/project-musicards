@@ -52,9 +52,23 @@ function PlayDeck({ deck }) {
   const [correctAttempts, setCorrectAttempts] = useState(0);
   const [deckComplete, setDeckComplete] = useState(false);
 
-  useEffect(() => {
-    resetDeck();
-  }, []);
+  // useEffect(() => {
+  //   const newPlaythrough = [...deck];
+  //   newPlaythrough.map((flashcard) => {
+  //     return {
+  //       ...flashcard,
+  //       correct: false,
+  //     };
+  //   });
+  //   setPlaythrough(newPlaythrough);
+  // }, []);
+
+  playthrough.map((flashcard) => {
+    return {
+      ...flashcard,
+      correct: false,
+    };
+  });
 
   const checkComplete = () => {
     if (countCorrect() === deck.length) setDeckComplete(true);
@@ -63,7 +77,7 @@ function PlayDeck({ deck }) {
   const nextCard = () => {
     let nextIndex = (currentIndex + 1) % deck.length;
     while (playthrough[nextIndex].correct) {
-      if (deckComplete) break;
+      if (allCorrect()) break;
       // if next card by index is already marked correct, skip it
       nextIndex = (nextIndex + 1) % deck.length;
     }
@@ -73,7 +87,7 @@ function PlayDeck({ deck }) {
   const previousCard = () => {
     let previousIndex = (currentIndex + deck.length - 1) % deck.length;
     while (playthrough[previousIndex].correct) {
-      if (deckComplete) break;
+      if (allCorrect()) break;
       // if previous card by index is already marked correct, skip it
       previousIndex = (previousIndex + deck.length - 1) % deck.length;
     }
@@ -86,20 +100,30 @@ function PlayDeck({ deck }) {
       return score;
     }, 0);
   };
+
   const countCardsLeft = () => deck.length - countCorrect();
+
+  const allCorrect = () => {
+    return countCorrect() === deck.length ? true : false;
+  };
 
   const markCorrect = () => {
     const newPlaythroughArray = [...playthrough];
     newPlaythroughArray[currentIndex].correct = true;
     setPlaythrough(newPlaythroughArray);
-    setAttempts(attempts + 1);
-    setCorrectAttempts(correctAttempts + 1);
     checkComplete();
+    if (!deckComplete) {
+      setAttempts(attempts + 1);
+      setCorrectAttempts(correctAttempts + 1);
+    }
     nextCard();
+    console.log(playthrough);
   };
 
   const markIncorrect = () => {
-    setAttempts(attempts + 1);
+    if (!deckComplete) {
+      setAttempts(attempts + 1);
+    }
     nextCard();
   };
 
@@ -115,6 +139,7 @@ function PlayDeck({ deck }) {
     setCurrentIndex(0);
     setAttempts(0);
     setCorrectAttempts(0);
+    setDeckComplete(false);
   };
 
   return (
