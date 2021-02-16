@@ -16,6 +16,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "uuid": "^3.4.0",
+    "vexflow": "^3.0.9",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

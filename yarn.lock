@@ -12508,6 +12508,11 @@
     "core-util-is" "1.0.2"
     "extsprintf" "^1.2.0"
 
+"vexflow@^3.0.9":
+  "integrity" "sha512-JzDUC3SZvyRxvALv0UrlgCJSH7WzNSShNjXK0rTWqDJscCcytrTWLT3LYtsDvby8qbszdaD708xOe9D79FLTFA=="
+  "resolved" "https://registry.npmjs.org/vexflow/-/vexflow-3.0.9.tgz"
+  "version" "3.0.9"
+
 "vm-browserify@^1.0.1":
   "integrity" "sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ=="
   "resolved" "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz"

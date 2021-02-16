@@ -2,12 +2,14 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import germanDeck from "./decks/german.js";
+import musicDeck from "./decks/music.js";
 import DeckGallery from "./components/DeckGallery";
 import PlayDeck from "./components/PlayDeck";
 import NewCard from "./components/NewCard";
+import Stave from "./components/Stave";
 
 function App() {
-  const [deck, setDeck] = useState(germanDeck);
+  const [deck, setDeck] = useState(musicDeck);
 
   const addFlashcard = (deck, flashcard) => {
     const newDeck = [...deck];

@@ -25,6 +25,7 @@ function Flashcard({ flashcard, className }) {
       padding: "1rem",
       fontSize: "2rem",
       display: "flex",
+      flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
       cursor: "pointer",
@@ -48,6 +49,18 @@ function Flashcard({ flashcard, className }) {
     setIsFront(!isFront);
   };
 
+  const prepareLayout = (side) => {
+    // front and back may be a string or an array
+    // if array, we want to process it for display first
+    if (Array.isArray(side)) {
+      return side.map((section, index) => {
+        return <div key={index}>{section}</div>;
+      });
+    } else {
+      return side;
+    }
+  };
+
   return (
     <Card
       className={clsx(className, classes.flashcard, {
@@ -56,7 +69,7 @@ function Flashcard({ flashcard, className }) {
       variant="outlined"
       onClick={flipCard}
     >
-      {isFront ? front : back}
+      {isFront ? prepareLayout(front) : prepareLayout(back)}
     </Card>
   );
 }
