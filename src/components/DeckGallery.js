@@ -3,7 +3,7 @@ import Flashcard from "./Flashcard";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -14,6 +14,13 @@ const useStyles = makeStyles({
   flashcardOverride: {
     width: "90% !important",
     margin: "0 auto",
+  },
+  toolbar: {
+    width: "100%",
+    maxWidth: "20rem",
+    margin: "0 auto",
+    display: "flex",
+    justifyContent: "space-around",
   },
 });
 
@@ -31,9 +38,14 @@ function DeckGallery({ deck }) {
   return (
     <Grid className={classes.deckGallery} container spacing={2}>
       <Grid item xs={12}>
-        <Link to="/play">
-          <FontAwesomeIcon icon={faPlay} />
-        </Link>
+        <div className={classes.toolbar}>
+          <Link to="/play">
+            <FontAwesomeIcon icon={faPlay} />
+          </Link>
+          <Link to="/cards/new">
+            <FontAwesomeIcon icon={faPlus} />
+          </Link>
+        </div>
       </Grid>
       {flashcards}
     </Grid>
