@@ -53,8 +53,8 @@ function Flashcard({ flashcard, className }) {
     // front and back may be a string or an array
     // if array, we want to process it for display first
     if (Array.isArray(side)) {
-      return side.map((section, index) => {
-        return <div key={index}>{section}</div>;
+      return side.map((section) => {
+        return <div key={Math.random()}>{section}</div>;
       });
     } else {
       return side;
