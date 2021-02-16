@@ -2,24 +2,41 @@ import React, { useState, useLayoutEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
-
-const useStyles = makeStyles({
-  flashcard: {
-    borderRadius: "0.25rem",
-    minHeight: "10rem",
-    padding: "1rem",
-    fontSize: "2rem",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    cursor: "pointer",
-  },
-  backOfCard: {
-    border: "1px solid #000000",
-  },
-});
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 function Flashcard({ flashcard, className }) {
+  // determine width of Flashcard
+  const isMoreThan540px = useMediaQuery("(min-width:540px)");
+  const isMoreThan410px = useMediaQuery("(min-width:410px)");
+  const isMoreThan360px = useMediaQuery("(min-width:360px)");
+  const isMoreThan320px = useMediaQuery("(min-width:320px)");
+
+  let maxWidth = "20rem";
+  if (isMoreThan540px) maxWidth = "20rem";
+  else if (isMoreThan410px) maxWidth = "15rem";
+  else if (isMoreThan360px) maxWidth = "12rem";
+  else if (isMoreThan320px) maxWidth = "9rem";
+  else maxWidth = "7rem";
+
+  const useStyles = makeStyles({
+    flashcard: {
+      borderRadius: "0.25rem",
+      minHeight: "10rem",
+      padding: "1rem",
+      fontSize: "2rem",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      cursor: "pointer",
+      width: "90%",
+      maxWidth: maxWidth,
+      margin: "0 auto",
+    },
+    backOfCard: {
+      border: "1px solid #000000",
+    },
+  });
+
   const classes = useStyles();
   const { front, back } = flashcard;
   const [isFront, setIsFront] = useState(true);

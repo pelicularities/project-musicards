@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Flashcard from "./Flashcard";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   deckGallery: {
@@ -19,6 +22,11 @@ function DeckGallery({ deck }) {
   ));
   return (
     <Grid className={classes.deckGallery} container spacing={2}>
+      <Grid item xs={12}>
+        <Link to="/play">
+          <FontAwesomeIcon icon={faPlay} />
+        </Link>
+      </Grid>
       {flashcards}
     </Grid>
   );

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Flashcard from "./Flashcard";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronCircleRight,
