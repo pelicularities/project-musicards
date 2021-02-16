@@ -11,13 +11,21 @@ const useStyles = makeStyles({
     width: "95%",
     margin: "0 auto",
   },
+  flashcardOverride: {
+    width: "90% !important",
+    margin: "0 auto",
+  },
 });
 
 function DeckGallery({ deck }) {
   const classes = useStyles();
   const flashcards = deck.map((flashcard) => (
     <Grid item key={flashcard.id} xs={12} sm={6} md={4} lg={3} xl={2}>
-      <Flashcard key={flashcard.id} flashcard={flashcard} />
+      <Flashcard
+        key={flashcard.id}
+        flashcard={flashcard}
+        className={classes.flashcardOverride}
+      />
     </Grid>
   ));
   return (

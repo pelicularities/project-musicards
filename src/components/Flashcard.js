@@ -28,9 +28,8 @@ function Flashcard({ flashcard, className }) {
       justifyContent: "center",
       alignItems: "center",
       cursor: "pointer",
-      width: "90%",
+      width: maxWidth,
       maxWidth: maxWidth,
-      margin: "0 auto",
     },
     backOfCard: {
       border: "1px solid #000000",
