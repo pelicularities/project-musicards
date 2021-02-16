@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import Vex from "vexflow";
 
-function Stave({ notes, clef, timeSignature, keySignature }) {
+function Stave({ id, notes, clef, timeSignature, keySignature }) {
   const divRef = useRef(null);
   useEffect(() => {
     divRef.current.innerHTML = "";
     const vf = new Vex.Flow.Factory({
-      renderer: { elementId: "boo", width: 150, height: 150 },
+      renderer: { elementId: id, width: 150, height: 150 },
     });
 
     const score = vf.EasyScore();
@@ -33,7 +33,7 @@ function Stave({ notes, clef, timeSignature, keySignature }) {
     vf.draw();
   }, []);
 
-  return <div ref={divRef} id="boo"></div>;
+  return <div ref={divRef} id={id}></div>;
 }
 
 export default Stave;
