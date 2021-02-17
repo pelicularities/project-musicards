@@ -11,6 +11,10 @@ const useStyles = makeStyles({
   formControl: {
     minWidth: 120,
   },
+  staveConfig: {
+    display: "flex",
+    justifyContent: "space-evenly",
+  },
 });
 
 function NewStave(props) {
@@ -26,20 +30,63 @@ function NewStave(props) {
 
   return (
     <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Clef</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={clef}
-          onChange={(event) => handleDropdownChange(event, setClef)}
-        >
-          <MenuItem value={"treble"}>Treble</MenuItem>
-          <MenuItem value={"bass"}>Bass</MenuItem>
-          <MenuItem value={"alto"}>Alto</MenuItem>
-          <MenuItem value={"tenor"}>Tenor</MenuItem>
-        </Select>
-      </FormControl>
+      <div className={classes.staveConfig}>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Clef</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={clef}
+            onChange={(event) => handleDropdownChange(event, setClef)}
+          >
+            <MenuItem value={"treble"}>Treble</MenuItem>
+            <MenuItem value={"bass"}>Bass</MenuItem>
+            <MenuItem value={"alto"}>Alto</MenuItem>
+            <MenuItem value={"tenor"}>Tenor</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Key Signature</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={keySignature}
+            onChange={(event) => handleDropdownChange(event, setKeySignature)}
+          >
+            <MenuItem value={"C"}>C major</MenuItem>
+            <MenuItem value={"F"}>F major</MenuItem>
+            <MenuItem value={"Bb"}>Bb major</MenuItem>
+            <MenuItem value={"Eb"}>Eb major</MenuItem>
+            <MenuItem value={"Ab"}>Ab major</MenuItem>
+            <MenuItem value={"Db"}>Db major</MenuItem>
+            <MenuItem value={"Gb"}>Gb major</MenuItem>
+            <MenuItem value={"Cb"}>Cb major</MenuItem>
+            <MenuItem value={"G"}>G major</MenuItem>
+            <MenuItem value={"D"}>D major</MenuItem>
+            <MenuItem value={"A"}>A major</MenuItem>
+            <MenuItem value={"E"}>E major</MenuItem>
+            <MenuItem value={"B"}>B major</MenuItem>
+            <MenuItem value={"F#"}>F# major</MenuItem>
+            <MenuItem value={"C#"}>C# major</MenuItem>
+
+            <MenuItem value={"Am"}>A minor</MenuItem>
+            <MenuItem value={"Dm"}>D minor</MenuItem>
+            <MenuItem value={"Gm"}>G minor</MenuItem>
+            <MenuItem value={"Cm"}>C minor</MenuItem>
+            <MenuItem value={"Fm"}>F minor</MenuItem>
+            <MenuItem value={"Bbm"}>Bb minor</MenuItem>
+            <MenuItem value={"Ebm"}>Eb minor</MenuItem>
+            <MenuItem value={"Abm"}>Ab minor</MenuItem>
+            <MenuItem value={"Em"}>E minor</MenuItem>
+            <MenuItem value={"Bm"}>B minor</MenuItem>
+            <MenuItem value={"F#m"}>F# minor</MenuItem>
+            <MenuItem value={"C#m"}>C# minor</MenuItem>
+            <MenuItem value={"G#m"}>G# minor</MenuItem>
+            <MenuItem value={"D#m"}>D# minor</MenuItem>
+            <MenuItem value={"A#m"}>A# minor</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <Stave
         key={Math.random()}
         id={uuidv4()}
