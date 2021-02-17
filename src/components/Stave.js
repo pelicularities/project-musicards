@@ -1,8 +1,24 @@
 import React, { useLayoutEffect, useRef } from "react";
 import Vex from "vexflow";
+import { makeStyles } from "@material-ui/core/styles";
 
-function Stave({ id, notes, clef, timeSignature, keySignature }) {
+const useStyles = makeStyles({
+  hidden: {
+    display: "none",
+  },
+});
+
+function Stave({
+  id,
+  notes,
+  clef,
+  timeSignature,
+  keySignature,
+  hidden = false,
+}) {
   const divRef = useRef(null);
+  const classes = useStyles();
+  let className = "";
   useLayoutEffect(() => {
     divRef.current.innerHTML = "";
     const vf = new Vex.Flow.Factory({
@@ -14,9 +30,15 @@ function Stave({ id, notes, clef, timeSignature, keySignature }) {
 
     let stave;
     if (notes) {
-      stave = system.addStave({
-        voices: [score.voice(score.notes(notes))],
-      });
+      try {
+        const voice = score.voice(score.notes(notes));
+        voice.setMode(2);
+        stave = system.addStave({
+          voices: [voice],
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       stave = system.addStave({
         voices: [score.voice(score.notes("B4/1/r"))],
@@ -32,7 +54,11 @@ function Stave({ id, notes, clef, timeSignature, keySignature }) {
     vf.draw();
   }, []);
 
-  return <div ref={divRef} id={id}></div>;
+  if (hidden) {
+    className = classes.hidden;
+  }
+
+  return <div ref={divRef} className={className} id={id}></div>;
 }
 
 export default Stave;

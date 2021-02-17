@@ -5,11 +5,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import { Parser } from "vexflow/src/parser";
+import easyScoreGrammar from "../grammars/easyscore";
 
 const useStyles = makeStyles({
   formControl: {
     minWidth: 120,
+    margin: "1rem",
   },
   staveConfig: {
     display: "flex",
@@ -19,14 +23,26 @@ const useStyles = makeStyles({
 
 function NewStave(props) {
   const classes = useStyles();
-  const [keySignature, setKeySignature] = useState(null);
-  const [timeSignature, setTimeSignature] = useState(null);
-  const [notes, setNotes] = useState(null);
-  const [clef, setClef] = useState(null);
+  const [keySignature, setKeySignature] = useState("");
+  const [timeSignature, setTimeSignature] = useState("");
+  const [notes, setNotes] = useState("");
+  const [validNotes, setValidNotes] = useState(null);
+  const [clef, setClef] = useState("");
+  const [prompt, setPrompt] = useState("");
 
-  const handleDropdownChange = (event, setState) => {
+  const handleInputChange = (event, setState) => {
     setState(event.target.value);
   };
+
+  const parseNotes = (event) => {
+    setNotes(event.target.value);
+  };
+
+  useEffect(() => {
+    const parser = new Parser(easyScoreGrammar);
+    const result = parser.parse(notes);
+    if (result.success) setValidNotes(notes);
+  }, [notes]);
 
   return (
     <div>
@@ -37,7 +53,7 @@ function NewStave(props) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={clef}
-            onChange={(event) => handleDropdownChange(event, setClef)}
+            onChange={(event) => handleInputChange(event, setClef)}
           >
             <MenuItem value={"treble"}>Treble</MenuItem>
             <MenuItem value={"bass"}>Bass</MenuItem>
@@ -51,7 +67,7 @@ function NewStave(props) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={keySignature}
-            onChange={(event) => handleDropdownChange(event, setKeySignature)}
+            onChange={(event) => handleInputChange(event, setKeySignature)}
           >
             <MenuItem value={"C"}>C major</MenuItem>
             <MenuItem value={"F"}>F major</MenuItem>
@@ -92,7 +108,7 @@ function NewStave(props) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={timeSignature}
-            onChange={(event) => handleDropdownChange(event, setTimeSignature)}
+            onChange={(event) => handleInputChange(event, setTimeSignature)}
           >
             <MenuItem value={null}>None</MenuItem>
             <MenuItem value={"4/4"}>4/4</MenuItem>
@@ -107,13 +123,23 @@ function NewStave(props) {
           </Select>
         </FormControl>
       </div>
+      <div>
+        <TextField
+          className={classes.formInputs}
+          label="Notes"
+          fullWidth
+          variant="outlined"
+          value={notes}
+          onChange={parseNotes}
+        />
+      </div>
       <Stave
         key={Math.random()}
         id={uuidv4()}
         clef={clef}
         keySignature={keySignature}
         timeSignature={timeSignature}
-        notes={notes}
+        notes={validNotes}
       />
     </div>
   );
