@@ -34,15 +34,11 @@ function NewStave(props) {
     setState(event.target.value);
   };
 
-  const parseNotes = (event) => {
-    setNotes(event.target.value);
-  };
-
   useEffect(() => {
     const parser = new Parser(easyScoreGrammar);
     const result = parser.parse(notes);
     if (result.success) setValidNotes(notes);
-  }, [notes]);
+  }, [notes, clef]);
 
   return (
     <div>
@@ -130,7 +126,7 @@ function NewStave(props) {
           fullWidth
           variant="outlined"
           value={notes}
-          onChange={parseNotes}
+          onChange={(event) => handleInputChange(event, setNotes)}
         />
       </div>
       <Stave

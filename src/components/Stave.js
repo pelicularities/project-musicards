@@ -30,15 +30,11 @@ function Stave({
 
     let stave;
     if (notes) {
-      try {
-        const voice = score.voice(score.notes(notes));
-        voice.setMode(2);
-        stave = system.addStave({
-          voices: [voice],
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      const voice = score.voice(score.notes(notes, { clef: clef || "treble" }));
+      voice.setMode(2);
+      stave = system.addStave({
+        voices: [voice],
+      });
     } else {
       stave = system.addStave({
         voices: [score.voice(score.notes("B4/1/r"))],
