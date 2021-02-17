@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import Vex from "vexflow";
 
 function Stave({ id, notes, clef, timeSignature, keySignature }) {
   const divRef = useRef(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     divRef.current.innerHTML = "";
     const vf = new Vex.Flow.Factory({
       renderer: { elementId: id, width: 150, height: 150 },
