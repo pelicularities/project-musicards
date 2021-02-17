@@ -21,14 +21,13 @@ const useStyles = makeStyles({
   },
 });
 
-function NewStave(props) {
+function NewStave({ onStaveChange }) {
   const classes = useStyles();
+  const [clef, setClef] = useState("");
   const [keySignature, setKeySignature] = useState("");
   const [timeSignature, setTimeSignature] = useState("");
   const [notes, setNotes] = useState("");
   const [validNotes, setValidNotes] = useState(null);
-  const [clef, setClef] = useState("");
-  const [prompt, setPrompt] = useState("");
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
@@ -39,6 +38,17 @@ function NewStave(props) {
     const result = parser.parse(notes);
     if (result.success) setValidNotes(notes);
   }, [notes, clef]);
+
+  useEffect(() => {
+    if (!onStaveChange) return;
+    const staveProps = {
+      clef: clef,
+      keySignature: keySignature,
+      timeSignature: timeSignature,
+      notes: validNotes,
+    };
+    onStaveChange(staveProps);
+  }, [clef, keySignature, timeSignature, validNotes]);
 
   return (
     <div>

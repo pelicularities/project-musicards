@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -8,6 +8,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
 import NewStave from "./NewStave";
+import Stave from "./Stave";
 
 const useStyles = makeStyles({
   addFlashcardForm: {
@@ -24,9 +25,13 @@ const useStyles = makeStyles({
 function NewCard({ deck, addFlashcard }) {
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
+  const [frontText, setFrontText] = useState("");
+  const [backText, setBackText] = useState("");
   const [redirectToMain, setRedirect] = useState(false);
   const [hasFrontStave, setHasFrontStave] = useState(false);
   const [hasBackStave, setHasBackStave] = useState(false);
+  const [frontStave, setFrontStave] = useState(null);
+  const [backStave, setBackStave] = useState(null);
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
@@ -42,6 +47,38 @@ function NewCard({ deck, addFlashcard }) {
     setRedirect(true);
   };
 
+  const handleStaveChange = (setStave) => {
+    return (staveProps) => {
+      const { clef, keySignature, timeSignature, notes } = staveProps;
+      const stave = (
+        <Stave
+          id={uuidv4()}
+          clef={clef}
+          keySignature={keySignature}
+          timeSignature={timeSignature}
+          notes={notes}
+        />
+      );
+      setStave(stave);
+    };
+  };
+
+  useEffect(() => {
+    if (hasFrontStave) {
+      setFront([frontText, frontStave]);
+    } else {
+      setFront(frontText);
+    }
+  }, [hasFrontStave, frontText, frontStave]);
+
+  useEffect(() => {
+    if (hasBackStave) {
+      setBack([backText, backStave]);
+    } else {
+      setBack(backText);
+    }
+  }, [hasBackStave, backText, backStave]);
+
   const classes = useStyles();
   return (
     <div>
@@ -49,12 +86,12 @@ function NewCard({ deck, addFlashcard }) {
       <form className={classes.addFlashcardForm}>
         <TextField
           className={classes.formInputs}
-          label="Front"
+          label="Front Text"
           required
           fullWidth
           variant="outlined"
-          value={front}
-          onChange={(e) => handleInputChange(e, setFront)}
+          value={frontText}
+          onChange={(e) => handleInputChange(e, setFrontText)}
         />
         <FormGroup row>
           <FormControlLabel
@@ -71,15 +108,17 @@ function NewCard({ deck, addFlashcard }) {
             label="Add Music Stave to Front"
           />
         </FormGroup>
-        {hasFrontStave && <NewStave />}
+        {hasFrontStave && (
+          <NewStave onStaveChange={handleStaveChange(setFrontStave)} />
+        )}
         <TextField
           className={classes.formInputs}
-          label="Back"
+          label="Back Text"
           required
           fullWidth
           variant="outlined"
-          value={back}
-          onChange={(e) => handleInputChange(e, setBack)}
+          value={backText}
+          onChange={(e) => handleInputChange(e, setBackText)}
         />
         <FormGroup row>
           <FormControlLabel
@@ -96,7 +135,9 @@ function NewCard({ deck, addFlashcard }) {
             label="Add Music Stave to Back"
           />
         </FormGroup>
-        {hasBackStave && <NewStave />}
+        {hasBackStave && (
+          <NewStave onStaveChange={handleStaveChange(setBackStave)} />
+        )}
         <div>
           <Button
             variant="contained"
