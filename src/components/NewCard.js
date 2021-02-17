@@ -109,7 +109,10 @@ function NewCard({ deck, addFlashcard }) {
           />
         </FormGroup>
         {hasFrontStave && (
-          <NewStave onStaveChange={handleStaveChange(setFrontStave)} />
+          <NewStave
+            width={600}
+            onStaveChange={handleStaveChange(setFrontStave)}
+          />
         )}
         <TextField
           className={classes.formInputs}
@@ -136,7 +139,10 @@ function NewCard({ deck, addFlashcard }) {
           />
         </FormGroup>
         {hasBackStave && (
-          <NewStave onStaveChange={handleStaveChange(setBackStave)} />
+          <NewStave
+            width={600}
+            onStaveChange={handleStaveChange(setBackStave)}
+          />
         )}
         <div>
           <Button

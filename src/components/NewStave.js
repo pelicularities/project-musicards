@@ -21,7 +21,7 @@ const useStyles = makeStyles({
   },
 });
 
-function NewStave({ onStaveChange }) {
+function NewStave({ onStaveChange, width = 150, height = 150 }) {
   const classes = useStyles();
   const [clef, setClef] = useState("");
   const [keySignature, setKeySignature] = useState("");
@@ -146,6 +146,8 @@ function NewStave({ onStaveChange }) {
         keySignature={keySignature}
         timeSignature={timeSignature}
         notes={validNotes}
+        width={width}
+        height={height}
       />
     </div>
   );

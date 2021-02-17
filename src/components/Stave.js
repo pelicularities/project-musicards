@@ -14,6 +14,8 @@ function Stave({
   clef,
   timeSignature,
   keySignature,
+  width = 150,
+  height = 150,
   hidden = false,
 }) {
   const divRef = useRef(null);
@@ -22,7 +24,7 @@ function Stave({
   useLayoutEffect(() => {
     divRef.current.innerHTML = "";
     const vf = new Vex.Flow.Factory({
-      renderer: { elementId: id, width: 150, height: 150 },
+      renderer: { elementId: id, width: width, height: height },
     });
 
     const score = vf.EasyScore();
