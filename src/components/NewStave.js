@@ -46,7 +46,7 @@ function NewStave(props) {
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
-          <InputLabel id="demo-simple-select-label">Key Signature</InputLabel>
+          <InputLabel id="demo-simple-select-label">Key</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -84,6 +84,26 @@ function NewStave(props) {
             <MenuItem value={"G#m"}>G# minor</MenuItem>
             <MenuItem value={"D#m"}>D# minor</MenuItem>
             <MenuItem value={"A#m"}>A# minor</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Time</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={timeSignature}
+            onChange={(event) => handleDropdownChange(event, setTimeSignature)}
+          >
+            <MenuItem value={null}>None</MenuItem>
+            <MenuItem value={"4/4"}>4/4</MenuItem>
+            <MenuItem value={"3/4"}>3/4</MenuItem>
+            <MenuItem value={"2/4"}>2/4</MenuItem>
+            <MenuItem value={"2/2"}>2/2</MenuItem>
+            <MenuItem value={"6/8"}>6/8</MenuItem>
+            <MenuItem value={"9/8"}>9/8</MenuItem>
+            <MenuItem value={"12/8"}>12/8</MenuItem>
+            <MenuItem value={"C"}>C</MenuItem>
+            <MenuItem value={"C|"}>₵</MenuItem>
           </Select>
         </FormControl>
       </div>

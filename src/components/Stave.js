@@ -24,7 +24,10 @@ function Stave({ id, notes, clef, timeSignature, keySignature }) {
     }
     if (clef) stave.addClef(clef);
     if (keySignature) stave.addKeySignature(keySignature);
-    if (timeSignature) stave.addTimeSignature(timeSignature);
+    if (timeSignature) {
+      score.set({ timeSignature: timeSignature });
+      stave.addTimeSignature(timeSignature);
+    }
 
     vf.draw();
   }, []);
