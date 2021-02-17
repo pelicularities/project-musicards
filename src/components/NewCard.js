@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import Switch from "@material-ui/core/Switch";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
+import NewStave from "./NewStave";
 
 const useStyles = makeStyles({
   addFlashcardForm: {
@@ -21,9 +25,15 @@ function NewCard({ deck, addFlashcard }) {
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [redirectToMain, setRedirect] = useState(false);
+  const [hasFrontStave, setHasFrontStave] = useState(false);
+  const [hasBackStave, setHasBackStave] = useState(false);
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
+  };
+
+  const handleSwitchChange = (variable, setState) => {
+    setState(!variable);
   };
 
   const handleAddFlashcard = () => {
@@ -46,6 +56,22 @@ function NewCard({ deck, addFlashcard }) {
           value={front}
           onChange={(e) => handleInputChange(e, setFront)}
         />
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={hasFrontStave}
+                onChange={() =>
+                  handleSwitchChange(hasFrontStave, setHasFrontStave)
+                }
+                color="primary"
+                name="hasFrontStave"
+              />
+            }
+            label="Add Music Stave to Front"
+          />
+        </FormGroup>
+        {hasFrontStave && <NewStave />}
         <TextField
           className={classes.formInputs}
           label="Back"
@@ -55,14 +81,32 @@ function NewCard({ deck, addFlashcard }) {
           value={back}
           onChange={(e) => handleInputChange(e, setBack)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          onClick={() => handleAddFlashcard()}
-        >
-          Add New Flashcard
-        </Button>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={hasBackStave}
+                onChange={() =>
+                  handleSwitchChange(hasBackStave, setHasBackStave)
+                }
+                color="primary"
+                name="hasBackStave"
+              />
+            }
+            label="Add Music Stave to Back"
+          />
+        </FormGroup>
+        {hasBackStave && <NewStave />}
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            disableElevation
+            onClick={() => handleAddFlashcard()}
+          >
+            Add New Flashcard
+          </Button>
+        </div>
       </form>
     </div>
   );

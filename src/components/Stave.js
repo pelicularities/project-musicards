@@ -12,24 +12,20 @@ function Stave({ id, notes, clef, timeSignature, keySignature }) {
     const score = vf.EasyScore();
     const system = vf.System();
 
-    // not sure why, but system.addTimeSignature in isolation
-    // does not work. seems like the methods must be chained?
-    if (timeSignature) {
-      system
-        .addStave({
-          voices: [score.voice(score.notes(notes))],
-        })
-        .addClef(clef)
-        .addKeySignature(keySignature)
-        .addTimeSignature(timeSignature);
+    let stave;
+    if (notes) {
+      stave = system.addStave({
+        voices: [score.voice(score.notes(notes))],
+      });
     } else {
-      system
-        .addStave({
-          voices: [score.voice(score.notes(notes))],
-        })
-        .addClef(clef)
-        .addKeySignature(keySignature);
+      stave = system.addStave({
+        voices: [score.voice(score.notes("B4/1/r"))],
+      });
     }
+    if (clef) stave.addClef(clef);
+    if (keySignature) stave.addKeySignature(keySignature);
+    if (timeSignature) stave.addTimeSignature(timeSignature);
+
     vf.draw();
   }, []);
 

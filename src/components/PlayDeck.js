@@ -130,6 +130,9 @@ function PlayDeck({ deck }) {
 
   return (
     <div className={classes.playContainer}>
+      <div>
+        <Link to="/">Back to Card Overview</Link>
+      </div>
       <div>Cards left: {countCardsLeft()}</div>
       <div>
         Cards correct: {countCorrect()}/{deck.length}
