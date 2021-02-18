@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef } from "react";
 import Vex from "vexflow";
+import { Beam } from "vexflow/src/beam";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -30,9 +31,11 @@ function Stave({
     const score = vf.EasyScore();
     const system = vf.System();
 
+    let beams;
     let stave;
     if (notes) {
       const voice = score.voice(score.notes(notes, { clef: clef || "treble" }));
+      beams = Vex.Flow.Beam.applyAndGetBeams(voice);
       voice.setMode(2);
       stave = system.addStave({
         voices: [voice],
@@ -50,6 +53,9 @@ function Stave({
     }
 
     vf.draw();
+    if (beams) {
+      beams.forEach((beam) => beam.setContext(vf.getContext()).draw());
+    }
   }, []);
 
   if (hidden) {
