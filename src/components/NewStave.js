@@ -15,6 +15,10 @@ const useStyles = makeStyles({
     minWidth: 120,
     margin: "1rem",
   },
+  formControlSmall: {
+    minWidth: 80,
+    margin: "1rem",
+  },
   staveConfig: {
     display: "flex",
     justifyContent: "space-evenly",
@@ -28,15 +32,69 @@ function NewStave({
   height = 150,
 }) {
   const classes = useStyles();
-  const [clef, setClef] = useState("");
-  const [keySignature, setKeySignature] = useState("");
-  const [timeSignature, setTimeSignature] = useState("");
+  const [clef, setClef] = useState("treble");
+  const [key, setKey] = useState("C");
+  const [timeSignature, setTimeSignature] = useState("4/4");
   const [notes, setNotes] = useState("");
   const [validNotes, setValidNotes] = useState(null);
+  const [mode, setMode] = useState("major");
+  const [keySignature, setKeySignature] = useState("C");
+
+  const majorKeys = [
+    "C",
+    "F",
+    "Bb",
+    "Eb",
+    "Ab",
+    "Db",
+    "Gb",
+    "Cb",
+    "G",
+    "D",
+    "A",
+    "E",
+    "B",
+    "F#",
+    "C#",
+  ];
+  const minorKeys = [
+    "A",
+    "D",
+    "G",
+    "C",
+    "F",
+    "Bb",
+    "Eb",
+    "Ab",
+    "E",
+    "B",
+    "F#",
+    "C#",
+    "G#",
+    "D#",
+    "A#",
+  ];
+
+  const keyMap = (mode) => {
+    const keysToMap = mode === "major" ? majorKeys : minorKeys;
+    return keysToMap.map((key) => (
+      <MenuItem key={key} value={key}>
+        {key}
+      </MenuItem>
+    ));
+  };
 
   const handleInputChange = (event, setState) => {
     setState(event.target.value);
   };
+
+  useEffect(() => {
+    if (mode === "major") {
+      setKeySignature(key);
+    } else {
+      setKeySignature(`${key}m`);
+    }
+  }, [key, mode]);
 
   useEffect(() => {
     const regexp = /(?!\/(32|64))\/(3|5|6|7|9|0)/;
@@ -77,48 +135,30 @@ function NewStave({
             <MenuItem value={"tenor"}>Tenor</MenuItem>
           </Select>
         </FormControl>
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControlSmall}>
           <InputLabel id="demo-simple-select-label">Key</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={keySignature}
-            onChange={(event) => handleInputChange(event, setKeySignature)}
+            value={key}
+            onChange={(event) => handleInputChange(event, setKey)}
           >
-            <MenuItem value={"C"}>C major</MenuItem>
-            <MenuItem value={"F"}>F major</MenuItem>
-            <MenuItem value={"Bb"}>Bb major</MenuItem>
-            <MenuItem value={"Eb"}>Eb major</MenuItem>
-            <MenuItem value={"Ab"}>Ab major</MenuItem>
-            <MenuItem value={"Db"}>Db major</MenuItem>
-            <MenuItem value={"Gb"}>Gb major</MenuItem>
-            <MenuItem value={"Cb"}>Cb major</MenuItem>
-            <MenuItem value={"G"}>G major</MenuItem>
-            <MenuItem value={"D"}>D major</MenuItem>
-            <MenuItem value={"A"}>A major</MenuItem>
-            <MenuItem value={"E"}>E major</MenuItem>
-            <MenuItem value={"B"}>B major</MenuItem>
-            <MenuItem value={"F#"}>F# major</MenuItem>
-            <MenuItem value={"C#"}>C# major</MenuItem>
-
-            <MenuItem value={"Am"}>A minor</MenuItem>
-            <MenuItem value={"Dm"}>D minor</MenuItem>
-            <MenuItem value={"Gm"}>G minor</MenuItem>
-            <MenuItem value={"Cm"}>C minor</MenuItem>
-            <MenuItem value={"Fm"}>F minor</MenuItem>
-            <MenuItem value={"Bbm"}>Bb minor</MenuItem>
-            <MenuItem value={"Ebm"}>Eb minor</MenuItem>
-            <MenuItem value={"Abm"}>Ab minor</MenuItem>
-            <MenuItem value={"Em"}>E minor</MenuItem>
-            <MenuItem value={"Bm"}>B minor</MenuItem>
-            <MenuItem value={"F#m"}>F# minor</MenuItem>
-            <MenuItem value={"C#m"}>C# minor</MenuItem>
-            <MenuItem value={"G#m"}>G# minor</MenuItem>
-            <MenuItem value={"D#m"}>D# minor</MenuItem>
-            <MenuItem value={"A#m"}>A# minor</MenuItem>
+            {keyMap(mode)}
           </Select>
         </FormControl>
         <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Mode</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={mode}
+            onChange={(event) => handleInputChange(event, setMode)}
+          >
+            <MenuItem value={"major"}>Major</MenuItem>
+            <MenuItem value={"minor"}>Minor</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl className={classes.formControlSmall}>
           <InputLabel id="demo-simple-select-label">Time</InputLabel>
           <Select
             labelId="demo-simple-select-label"
