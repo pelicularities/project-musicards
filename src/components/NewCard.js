@@ -111,6 +111,7 @@ function NewCard({ deck, addFlashcard }) {
         {hasFrontStave && (
           <NewStave
             width={600}
+            staveWidth={460}
             onStaveChange={handleStaveChange(setFrontStave)}
           />
         )}
@@ -141,6 +142,7 @@ function NewCard({ deck, addFlashcard }) {
         {hasBackStave && (
           <NewStave
             width={600}
+            staveWidth={460}
             onStaveChange={handleStaveChange(setBackStave)}
           />
         )}

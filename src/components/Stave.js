@@ -15,6 +15,7 @@ function Stave({
   clef,
   timeSignature,
   keySignature,
+  staveWidth = 135,
   width = 150,
   height = 150,
   hidden = false,
@@ -30,7 +31,7 @@ function Stave({
     });
 
     const score = vf.EasyScore();
-    const system = vf.System();
+    const system = vf.System({ width: staveWidth });
 
     let beams;
     let stave;
