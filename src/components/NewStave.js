@@ -34,9 +34,14 @@ function NewStave({ onStaveChange, width = 150, height = 150 }) {
   };
 
   useEffect(() => {
-    const parser = new Parser(easyScoreGrammar);
-    const result = parser.parse(notes);
-    if (result.success) setValidNotes(notes);
+    const regexp = /(?!\/(32|64))\/(3|5|6|7|9|0)/;
+    if (!regexp.test(notes)) {
+      const parser = new Parser(easyScoreGrammar);
+      const result = parser.parse(notes);
+      if (result.success) {
+        setValidNotes(notes);
+      }
+    }
   }, [notes, clef]);
 
   useEffect(() => {
