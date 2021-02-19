@@ -42,13 +42,13 @@ const useStyles = makeStyles((theme) => ({
     },
     "100%": {
       opacity: 1,
-      height: 100,
+      height: 211,
     },
   },
   "@keyframes fadeOut": {
     "0%": {
       opacity: 1,
-      height: 100,
+      height: 211,
     },
     "100%": {
       opacity: 0,

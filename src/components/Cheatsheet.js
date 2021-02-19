@@ -2,7 +2,6 @@ import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
-import { AccordionDetails } from "@material-ui/core/AccordionDetails";
 
 const useStyles = makeStyles({
   cheatsheet: {
@@ -26,6 +25,17 @@ function Cheatsheet({ className }) {
           <li>
             <strong>C4/4, D4</strong>: Middle C followed by the D above it, both
             quarter notes
+          </li>
+          <li>
+            <strong>C5/1, B4/8</strong>: High C, whole note, followed by the B
+            below it, eighth note
+          </li>
+          <li>
+            <strong>(D4 F#4 A4)/2, B4/4/r</strong>: D major chord, half note,
+            followed by a quarter note rest
+          </li>
+          <li>
+            <strong>D5/1/r</strong>: Full bar rest
           </li>
         </ul>
       </CardContent>
