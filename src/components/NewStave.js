@@ -90,9 +90,21 @@ function NewStave({
 
   useEffect(() => {
     if (mode === "major") {
-      setKeySignature(key);
+      const invalidKeys = ["D#", "G#", "A#"];
+      if (invalidKeys.includes(key)) {
+        setKey("C");
+        setKeySignature("C");
+      } else {
+        setKeySignature(key);
+      }
     } else {
-      setKeySignature(`${key}m`);
+      const invalidKeys = ["Db", "Gb", "Cb"];
+      if (invalidKeys.includes(key)) {
+        setKey("A");
+        setKeySignature("Am");
+      } else {
+        setKeySignature(`${key}m`);
+      }
     }
   }, [key, mode]);
 
