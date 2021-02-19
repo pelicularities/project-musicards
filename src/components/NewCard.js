@@ -88,7 +88,6 @@ function NewCard({ deck, addFlashcard }) {
         <TextField
           className={classes.formInputs}
           label="Front Text"
-          required
           fullWidth
           variant="outlined"
           value={frontText}
@@ -119,7 +118,6 @@ function NewCard({ deck, addFlashcard }) {
         <TextField
           className={classes.formInputs}
           label="Back Text"
-          required
           fullWidth
           variant="outlined"
           value={backText}

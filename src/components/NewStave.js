@@ -109,12 +109,30 @@ function NewStave({
   }, [key, mode]);
 
   useEffect(() => {
-    const regexp = /(?!\/(32|64))\/(3|5|6|7|9|0)/;
-    if (!regexp.test(notes)) {
-      const parser = new Parser(easyScoreGrammar);
-      const result = parser.parse(notes);
-      if (result.success) {
-        setValidNotes(notes);
+    // can't help it, this code needs to be commented
+    // special case: an empty Notes string will not
+    // pass the parser, but the case is already handled
+    // by the Stave component and we can safely pass
+    // an empty string to Stave
+    if (notes === "") {
+      setValidNotes("");
+    } else {
+      // the parser allows one invalid case to pass:
+      // when the duration is an invalid number
+      // permissible durations are powers of 2
+      // 1, 2, 4, 8, 16, 32, 64
+      // unfortunately, the parser simply uses /[0-9]+/
+      // so we need to stop some cases like /3 and /7
+      // from reaching the parser, which will throw an error
+      const regexp = /(?!\/(32|64))\/(3|5|6|7|9|0)/;
+      if (!regexp.test(notes)) {
+        // cool, now we can actually use the parser
+        // to determine if notes are actually valid
+        const parser = new Parser(easyScoreGrammar);
+        const result = parser.parse(notes);
+        if (result.success) {
+          setValidNotes(notes);
+        }
       }
     }
   }, [notes, clef]);
