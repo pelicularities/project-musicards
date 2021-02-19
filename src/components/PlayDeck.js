@@ -12,6 +12,7 @@ import {
   faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import PlayReport from "./PlayReport";
 
 const useStyles = makeStyles({
   playContainer: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
   buttonContainer: {
     display: "flex",
     justifyContent: "space-between",
-    maxWidth: "40rem",
+    width: "40rem",
     margin: "0.5rem auto 1rem auto",
   },
   playDeck: {
@@ -161,47 +162,47 @@ function PlayDeck({ deck }) {
           Reset Deck
         </Button>
       </div>
-      <div>Cards left: {countCardsLeft()}</div>
       <div>
-        Cards correct: {countCorrect()}/{deck.length}
+        <strong>Cards left:</strong> {countCardsLeft()}
       </div>
-      <div>
-        Attempts: {correctAttempts}/{attempts}
-      </div>
-
-      <div>{deckComplete && <span>You've completed this deck!</span>}</div>
-      <div className={classes.playDeck}>
-        <FontAwesomeIcon
-          icon={faChevronCircleLeft}
-          size="3x"
-          className={`${classes.grayLight} ${classes.clickable}`}
-          onClick={previousCard}
-        />
-        <Flashcard
-          flashcard={deck[currentIndex]}
-          className={classes.playFlashcard}
-        />
-        <FontAwesomeIcon
-          icon={faChevronCircleRight}
-          size="3x"
-          className={`${classes.grayLight} ${classes.clickable}`}
-          onClick={nextCard}
-        />
-      </div>
-      <div className={classes.playControls}>
-        <FontAwesomeIcon
-          icon={faTimesCircle}
-          size="3x"
-          className={`${classes.red} ${classes.clickable}`}
-          onClick={markIncorrect}
-        />
-        <FontAwesomeIcon
-          icon={faCheckCircle}
-          size="3x"
-          className={`${classes.green} ${classes.clickable}`}
-          onClick={markCorrect}
-        />
-      </div>
+      {deckComplete ? (
+        <PlayReport cards={deck.length} attempts={attempts} />
+      ) : (
+        <div>
+          <div className={classes.playDeck}>
+            <FontAwesomeIcon
+              icon={faChevronCircleLeft}
+              size="3x"
+              className={`${classes.grayLight} ${classes.clickable}`}
+              onClick={previousCard}
+            />
+            <Flashcard
+              flashcard={deck[currentIndex]}
+              className={classes.playFlashcard}
+            />
+            <FontAwesomeIcon
+              icon={faChevronCircleRight}
+              size="3x"
+              className={`${classes.grayLight} ${classes.clickable}`}
+              onClick={nextCard}
+            />
+          </div>
+          <div className={classes.playControls}>
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              size="3x"
+              className={`${classes.red} ${classes.clickable}`}
+              onClick={markIncorrect}
+            />
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              size="3x"
+              className={`${classes.green} ${classes.clickable}`}
+              onClick={markCorrect}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
