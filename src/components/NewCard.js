@@ -12,8 +12,8 @@ import Stave from "./Stave";
 
 const useStyles = makeStyles({
   addFlashcardForm: {
-    width: "100%",
-    maxWidth: "30rem",
+    width: "80%",
+    maxWidth: "40rem",
     margin: "0 auto",
   },
   formInputs: {
@@ -110,7 +110,7 @@ function NewCard({ deck, addFlashcard }) {
         </FormGroup>
         {hasFrontStave && (
           <NewStave
-            width={600}
+            width={500}
             staveWidth={460}
             onStaveChange={handleStaveChange(setFrontStave)}
           />
@@ -140,7 +140,7 @@ function NewCard({ deck, addFlashcard }) {
         </FormGroup>
         {hasBackStave && (
           <NewStave
-            width={600}
+            width={500}
             staveWidth={460}
             onStaveChange={handleStaveChange(setBackStave)}
           />
