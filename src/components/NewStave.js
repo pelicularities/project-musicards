@@ -9,8 +9,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Parser } from "vexflow/src/parser";
 import easyScoreGrammar from "../grammars/easyscore";
+import Cheatsheet from "./Cheatsheet";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
     margin: "1rem",
@@ -23,7 +24,38 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "space-evenly",
   },
-});
+  cheatsheetHidden: {
+    display: "none",
+  },
+  cheatsheetFadeIn: {
+    animation: `$fadeIn 0.5s ${theme.transitions.easing.easeInOut}`,
+  },
+  cheatsheetFadeOut: {
+    animation: `$fadeOut 0.5s ${theme.transitions.easing.easeInOut}`,
+    opacity: 0,
+    height: 0,
+  },
+  "@keyframes fadeIn": {
+    "0%": {
+      opacity: 0,
+      height: 0,
+    },
+    "100%": {
+      opacity: 1,
+      height: 100,
+    },
+  },
+  "@keyframes fadeOut": {
+    "0%": {
+      opacity: 1,
+      height: 100,
+    },
+    "100%": {
+      opacity: 0,
+      height: 0,
+    },
+  },
+}));
 
 function NewStave({
   onStaveChange,
@@ -39,6 +71,9 @@ function NewStave({
   const [validNotes, setValidNotes] = useState(null);
   const [mode, setMode] = useState("major");
   const [keySignature, setKeySignature] = useState("C");
+  const [cheatsheetClassName, setCheatsheetClassName] = useState(
+    classes.cheatsheetHidden
+  );
 
   const majorKeys = [
     "C",
@@ -210,6 +245,7 @@ function NewStave({
         </FormControl>
       </div>
       <div>
+        <Cheatsheet className={cheatsheetClassName} />
         <TextField
           className={classes.formInputs}
           label="Notes"
@@ -217,6 +253,8 @@ function NewStave({
           variant="outlined"
           value={notes}
           onChange={(event) => handleInputChange(event, setNotes)}
+          onFocus={() => setCheatsheetClassName(classes.cheatsheetFadeIn)}
+          onBlur={() => setCheatsheetClassName(classes.cheatsheetFadeOut)}
         />
       </div>
       <Stave

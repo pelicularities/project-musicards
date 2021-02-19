@@ -7,6 +7,7 @@ import DeckGallery from "./components/DeckGallery";
 import PlayDeck from "./components/PlayDeck";
 import NewCard from "./components/NewCard";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Cheatsheet from "./components/Cheatsheet";
 
 const theme = createMuiTheme({
   palette: {
@@ -45,6 +46,7 @@ function App() {
             path="/cards/new"
             render={() => <NewCard deck={deck} addFlashcard={addFlashcard} />}
           />
+          <Route exact path="/cheatsheet" render={() => <Cheatsheet />} />
         </div>
       </BrowserRouter>
     </ThemeProvider>
