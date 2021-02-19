@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Flashcard from "./Flashcard";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,12 +8,20 @@ import {
   faChevronCircleLeft,
   faCheckCircle,
   faTimesCircle,
+  faRedoAlt,
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   playContainer: {
     display: "inline-block",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    maxWidth: "40rem",
+    margin: "0.5rem auto 1rem auto",
   },
   playDeck: {
     display: "flex",
@@ -29,16 +38,19 @@ const useStyles = makeStyles({
     justifyContent: "space-evenly",
   },
   red: {
-    color: "#FF0000",
+    color: "#FF2E00",
   },
   green: {
-    color: "#00FF00",
+    color: "#53FF45",
   },
   grayLight: {
     color: "#C4c4c4",
   },
   clickable: {
     cursor: "pointer",
+  },
+  iconMargin: {
+    marginRight: "0.5rem",
   },
 });
 
@@ -129,8 +141,25 @@ function PlayDeck({ deck }) {
 
   return (
     <div className={classes.playContainer}>
-      <div>
-        <Link to="/">Back to Card Overview</Link>
+      <div className={classes.buttonContainer}>
+        <Link to="/">
+          <Button variant="outlined" color="primary" disableElevation>
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className={classes.iconMargin}
+            />
+            Back to Card Overview
+          </Button>
+        </Link>
+        <Button
+          variant="contained"
+          color="secondary"
+          disableElevation
+          onClick={resetDeck}
+        >
+          <FontAwesomeIcon icon={faRedoAlt} className={classes.iconMargin} />
+          Reset Deck
+        </Button>
       </div>
       <div>Cards left: {countCardsLeft()}</div>
       <div>
@@ -140,12 +169,7 @@ function PlayDeck({ deck }) {
         Attempts: {correctAttempts}/{attempts}
       </div>
 
-      <div>
-        {deckComplete && <span>You've completed this deck!</span>}{" "}
-        <Link to="#" onClick={resetDeck}>
-          Reset Deck
-        </Link>
-      </div>
+      <div>{deckComplete && <span>You've completed this deck!</span>}</div>
       <div className={classes.playDeck}>
         <FontAwesomeIcon
           icon={faChevronCircleLeft}

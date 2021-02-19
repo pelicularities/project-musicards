@@ -9,6 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { v4 as uuidv4 } from "uuid";
 import NewStave from "./NewStave";
 import Stave from "./Stave";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   addFlashcardForm: {
@@ -16,9 +19,22 @@ const useStyles = makeStyles({
     maxWidth: "40rem",
     margin: "0 auto",
   },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    maxWidth: "40rem",
+    margin: "0.5rem auto 1rem auto",
+  },
   formInputs: {
-    marginBottom: "1rem",
+    marginTop: "3rem",
+    marginBottom: "0.5rem",
     display: "block",
+  },
+  iconMargin: {
+    marginRight: "0.5rem",
+  },
+  marginTop: {
+    marginTop: "3rem",
   },
 });
 
@@ -84,6 +100,17 @@ function NewCard({ deck, addFlashcard }) {
   return (
     <div>
       {redirectToMain && <Redirect to="/" />}
+      <div className={classes.buttonContainer}>
+        <Link to="/">
+          <Button variant="outlined" color="primary" disableElevation>
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className={classes.iconMargin}
+            />
+            Back to Card Overview
+          </Button>
+        </Link>
+      </div>
       <form className={classes.addFlashcardForm}>
         <TextField
           className={classes.formInputs}
@@ -101,7 +128,7 @@ function NewCard({ deck, addFlashcard }) {
                 onChange={() =>
                   handleSwitchChange(hasFrontStave, setHasFrontStave)
                 }
-                color="primary"
+                color="secondary"
                 name="hasFrontStave"
               />
             }
@@ -131,7 +158,7 @@ function NewCard({ deck, addFlashcard }) {
                 onChange={() =>
                   handleSwitchChange(hasBackStave, setHasBackStave)
                 }
-                color="primary"
+                color="secondary"
                 name="hasBackStave"
               />
             }
@@ -148,9 +175,10 @@ function NewCard({ deck, addFlashcard }) {
         <div>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             disableElevation
             onClick={() => handleAddFlashcard()}
+            className={classes.marginTop}
           >
             Add New Flashcard
           </Button>
