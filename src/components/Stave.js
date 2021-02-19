@@ -1,37 +1,42 @@
 import React, { useLayoutEffect, useRef } from "react";
 import Vex from "vexflow";
-import { Beam } from "vexflow/src/beam";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-  hidden: {
-    display: "none",
-  },
-});
 
 function Stave({
   id,
-  notes,
+  notes = "",
   clef,
   timeSignature,
   keySignature,
-  staveWidth = 135,
-  width = 150,
+  staveWidth = 225,
+  width = 250,
   height = 150,
-  hidden = false,
+  fixedStaveWidth = true,
 }) {
   const divRef = useRef(null);
-  const classes = useStyles();
-  let className = "";
+  let dynamicWidth = width;
+  let dynamicStaveWidth = staveWidth;
+
+  if (!fixedStaveWidth) {
+    // determine staveWidth based on number of notes
+    const notesCount = notes.split(",").length;
+    if (notesCount < 3) {
+      dynamicStaveWidth = 225;
+      dynamicWidth = 250;
+    } else {
+      dynamicStaveWidth = 460;
+      dynamicWidth = 600;
+    }
+  }
 
   useLayoutEffect(() => {
     divRef.current.innerHTML = "";
+
     const vf = new Vex.Flow.Factory({
-      renderer: { elementId: id, width: width, height: height },
+      renderer: { elementId: id, width: dynamicWidth, height: height },
     });
 
     const score = vf.EasyScore();
-    const system = vf.System({ width: staveWidth });
+    const system = vf.System({ width: dynamicStaveWidth });
 
     let beams;
     let stave;
@@ -45,7 +50,7 @@ function Stave({
       });
     } else {
       stave = system.addStave({
-        voices: [score.voice(score.notes("B4/1/r"))],
+        voices: [score.voice(score.notes("D5/1/r"))],
       });
     }
     if (clef) {
@@ -63,11 +68,7 @@ function Stave({
     }
   }, []);
 
-  if (hidden) {
-    className = classes.hidden;
-  }
-
-  return <div ref={divRef} className={className} id={id}></div>;
+  return <div ref={divRef} id={id}></div>;
 }
 
 export default Stave;

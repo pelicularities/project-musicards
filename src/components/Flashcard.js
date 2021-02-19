@@ -35,6 +35,9 @@ function Flashcard({ flashcard, className }) {
     backOfCard: {
       border: "1px solid #000000",
     },
+    largeStave: {
+      alignSelf: "flex-start",
+    },
   });
 
   const classes = useStyles();
@@ -54,6 +57,19 @@ function Flashcard({ flashcard, className }) {
     // if array, we want to process it for display first
     if (Array.isArray(side)) {
       return side.map((section) => {
+        if (section.props) {
+          // check length of notes, see if it's going to be a long stave
+          // apply largeStave class if needed
+          // this code STINKS
+          const notesCount = section.props.notes.split(",").length;
+          if (notesCount > 2) {
+            return (
+              <div className={classes.largeStave} key={Math.random()}>
+                {section}
+              </div>
+            );
+          }
+        }
         return <div key={Math.random()}>{section}</div>;
       });
     } else {

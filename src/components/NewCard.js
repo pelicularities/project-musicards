@@ -57,6 +57,7 @@ function NewCard({ deck, addFlashcard }) {
           keySignature={keySignature}
           timeSignature={timeSignature}
           notes={notes}
+          fixedStaveWidth={false}
         />
       );
       setStave(stave);
