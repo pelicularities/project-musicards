@@ -24,7 +24,7 @@ function Stave({
       dynamicWidth = 250;
     } else {
       dynamicStaveWidth = 460;
-      dynamicWidth = 600;
+      dynamicWidth = 500;
     }
   }
 

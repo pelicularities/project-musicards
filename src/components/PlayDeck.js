@@ -19,11 +19,10 @@ const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    maxWidth: "30rem",
   },
   playFlashcard: {
     margin: "1rem",
-    width: "20rem",
+    width: "30rem",
   },
   playControls: {
     display: "flex",
