@@ -43,16 +43,16 @@ function DeckGallery({ deck }) {
     <Grid className={classes.deckGallery} container spacing={2}>
       <Grid item xs={12}>
         <div className={classes.toolbar}>
-          <Link to="/cards/new">
-            <Button variant="contained" color="secondary" disableElevation>
-              <FontAwesomeIcon icon={faPlus} className={classes.iconMargin} />{" "}
-              Add Card
-            </Button>
-          </Link>
           <Link to="/play">
             <Button variant="contained" color="primary" disableElevation>
               <FontAwesomeIcon icon={faPlay} className={classes.iconMargin} />{" "}
               Play Deck
+            </Button>
+          </Link>
+          <Link to="/cards/new">
+            <Button variant="contained" color="secondary" disableElevation>
+              <FontAwesomeIcon icon={faPlus} className={classes.iconMargin} />{" "}
+              Add Card
             </Button>
           </Link>
         </div>

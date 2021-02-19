@@ -23,12 +23,12 @@ function Cheatsheet({ className }) {
             <strong>C4/4</strong>: Middle C, quarter note
           </li>
           <li>
-            <strong>C4/4, D4</strong>: Middle C followed by the D above it, both
-            quarter notes
+            <strong>C4/4, Db4</strong>: Middle C followed by the D-flat above
+            it, both quarter notes
           </li>
           <li>
-            <strong>C5/1, B4/8</strong>: High C, whole note, followed by the B
-            below it, eighth note
+            <strong>C5/1, Bn4/8</strong>: High C, whole note, followed by the
+            B-natural below it, eighth note
           </li>
           <li>
             <strong>(D4 F#4 A4)/2, B4/4/r</strong>: D major chord, half note,
