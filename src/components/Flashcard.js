@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
+import { v4 as uuidv4 } from "uuid";
 
 function Flashcard({ flashcard, className }) {
   const useStyles = makeStyles({
@@ -36,29 +37,41 @@ function Flashcard({ flashcard, className }) {
     setIsFront(!isFront);
   };
 
+  // const prepareLayout = (side) => {
+  //   // front and back may be a string or an array
+  //   // if array, we want to process it for display first
+  //   if (Array.isArray(side)) {
+  //     return side.map((section) => {
+  //       if (section.props) {
+  //         // check length of notes, see if it's going to be a long stave
+  //         // apply largeStave class if needed
+  //         // this code STINKS
+  //         const notesCount = section.props.notes.split(",").length;
+  //         if (notesCount > 2) {
+  //           return (
+  //             <div className={classes.largeStave} key={Math.random()}>
+  //               {section}
+  //             </div>
+  //           );
+  //         }
+  //       }
+  //       return <div key={Math.random()}>{section}</div>;
+  //     });
+  //   } else {
+  //     return side;
+  //   }
+  // };
+
   const prepareLayout = (side) => {
-    // front and back may be a string or an array
-    // if array, we want to process it for display first
-    if (Array.isArray(side)) {
-      return side.map((section) => {
-        if (section.props) {
-          // check length of notes, see if it's going to be a long stave
-          // apply largeStave class if needed
-          // this code STINKS
-          const notesCount = section.props.notes.split(",").length;
-          if (notesCount > 2) {
-            return (
-              <div className={classes.largeStave} key={Math.random()}>
-                {section}
-              </div>
-            );
-          }
-        }
-        return <div key={Math.random()}>{section}</div>;
-      });
-    } else {
-      return side;
-    }
+    // front and back will be an array of objects
+    // each object has the keys "type" and "content"
+    // we want the content to be rendered based on the type
+
+    return side.map((section) => {
+      if (section.type === "text") {
+        return <div key={uuidv4()}>{section.content}</div>;
+      }
+    });
   };
 
   return (

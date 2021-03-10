@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import germanDeck from "./decks/german.js";
 import musicDeck from "./decks/music.js";
 import DeckGallery from "./components/DeckGallery";
@@ -25,6 +25,17 @@ const theme = createMuiTheme({
 
 function App() {
   const [deck, setDeck] = useState(musicDeck);
+  const queryUrl =
+    "https://express-musicards-test.herokuapp.com/decks/60482ace566a190015fafe86/cards";
+
+  useEffect(() => {
+    fetch(queryUrl)
+      .then((response) => response.json())
+      .then((json) => {
+        setDeck(json);
+      })
+      .catch(console.log);
+  }, []);
 
   const addFlashcard = (deck, flashcard) => {
     const newDeck = [...deck];
@@ -46,7 +57,6 @@ function App() {
             path="/cards/new"
             render={() => <NewCard deck={deck} addFlashcard={addFlashcard} />}
           />
-          <Route exact path="/cheatsheet" render={() => <Cheatsheet />} />
         </div>
       </BrowserRouter>
     </ThemeProvider>
