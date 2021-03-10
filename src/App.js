@@ -7,7 +7,7 @@ import DeckGallery from "./components/DeckGallery";
 import PlayDeck from "./components/PlayDeck";
 import NewCard from "./components/NewCard";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import Cheatsheet from "./components/Cheatsheet";
+import NewUser from "./components/NewUser";
 
 const theme = createMuiTheme({
   palette: {
@@ -51,6 +51,7 @@ function App() {
             <h1>Musicards</h1>
           </Link>
           <Route exact path="/" render={() => <DeckGallery deck={deck} />} />
+          <Route exact path="/users/new" render={() => <NewUser />} />
           <Route exact path="/play" render={() => <PlayDeck deck={deck} />} />
           <Route
             exact
