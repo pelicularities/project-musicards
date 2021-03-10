@@ -8,6 +8,8 @@ import PlayDeck from "./components/PlayDeck";
 import NewCard from "./components/NewCard";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import NewUser from "./components/NewUser";
+import Login from "./components/Login";
+import Logout from "./components/Logout";
 
 const theme = createMuiTheme({
   palette: {
@@ -52,6 +54,8 @@ function App() {
           </Link>
           <Route exact path="/" render={() => <DeckGallery deck={deck} />} />
           <Route exact path="/users/new" render={() => <NewUser />} />
+          <Route exact path="/users/login" render={() => <Login />} />
+          <Route exact path="/users/logout" render={() => <Logout />} />
           <Route exact path="/play" render={() => <PlayDeck deck={deck} />} />
           <Route
             exact
